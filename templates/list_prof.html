@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {% if plist == "ol" %}
+            <ol>
+                {% for profession in professions %}
+                <li>{{ profession }}</li>
+                {% endfor %}
+            </ol>
+            {% elif plist == "ul" %}
+            <ul>
+                {% for profession in professions %}
+                <li>{{ profession }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <h1>Неверный параметр</h1>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -26,6 +26,11 @@ def training(prof):
     return render_template('training.html', title='Тренировки в полёте', prof=prof)
 
 
+@app.route('/list_prof/<plist>')
+def list_prof():
+    return render_template('list_prof.html')
+
+
 @app.route('/image_mars')
 def image_mars():
     return render_template('image_mars.html')
