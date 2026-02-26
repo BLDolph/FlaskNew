@@ -21,6 +21,11 @@ def get_promotion():
             '<br>Присоединяйся!')
 
 
+@app.route('/training/<prof>')
+def training(prof):
+    return render_template('training.html', title='Тренировки в полёте', prof=prof)
+
+
 @app.route('/image_mars')
 def image_mars():
     return render_template('image_mars.html')

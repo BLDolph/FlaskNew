@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {% if "инженер" in prof or "строитель" in prof %}
+            <h2 class="text-center">Инженерные тренажеры</h2>
+            {% else %}
+            <h2 class="text-center">Научные симуляторы</h2>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            {% if "инженер" in prof or "строитель" in prof %}
+            <img src="{{ url_for('static', filename='images/ing.png') }}" alt="Тренажер инженера">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/sci.png') }}" alt="Тренажер ученого">
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
