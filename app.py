@@ -12,7 +12,7 @@ def get_index():
     return render_template('base.html', title='Заготовка')
 
 
-@app.route('/promote')
+@app.route('/promotion')
 def get_promotion():
     return ('Человечество вырастает из детства.'
             '<br>Человечеству мала одна планета.'
