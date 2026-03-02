@@ -36,5 +36,11 @@ def promotion_image():
 def astronaut_selection():
     return render_template('astronaut_selection.html', title='Отбор астронавтов')
 
+
+@app.route('/list_prof/<list>')
+def list_of_professions():
+    professions = ['Инженер', 'Биолог', 'Строитель', 'Врач', 'Водитель марсохода']
+    return render_template('list_prof.html')
+
 if __name__ == '__main__':
     app.run('127.0.0.1', 8080)
