@@ -2,12 +2,8 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route('/')#
-def get():
-    return 'Миссия Колонизация Марса'
 
-
-@app.route('/index')
+@app.route('/')
 def get_index():
     return render_template('base.html', title='Заготовка')
 
@@ -24,11 +20,6 @@ def get_promotion():
 @app.route('/training/<prof>')
 def training(prof):
     return render_template('training.html', title='Тренировки в полёте', prof=prof)
-
-
-@app.route('/list_prof/<plist>')
-def list_prof():
-    return render_template('list_prof.html')
 
 
 @app.route('/image_mars')
