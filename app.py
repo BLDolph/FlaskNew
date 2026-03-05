@@ -1,6 +1,11 @@
 from flask import Flask, render_template
+from flask import redirect
+
+from login_form import LoginForm
 
 app = Flask(__name__)
+
+app.config["SECRET_KEY"] = 'pudge'
 
 
 @app.route('/')
@@ -56,6 +61,14 @@ def answer():
         'ready': True
     }
     return render_template('auto_answer.html', **context)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
+        return redirect('/')
+    return render_template('login.html', form=login_form)
 
 
 if __name__ == '__main__':
