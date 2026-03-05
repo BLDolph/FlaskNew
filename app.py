@@ -9,6 +9,7 @@ app.config["SECRET_KEY"] = 'pudge'
 
 
 @app.route('/')
+@app.route('/index')
 def get_index():
     return render_template('base.html', title='Заготовка')
 
@@ -30,6 +31,11 @@ def get_promotion():
 @app.route('/image_mars')
 def image_mars():
     return render_template('image_mars.html')
+
+
+@app.route('/choice/<planet_name>')
+def choice_planet(planet_name):
+    return render_template('choose_planet.html')
 
 
 @app.route('/promotion_image')
