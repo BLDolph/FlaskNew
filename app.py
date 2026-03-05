@@ -17,8 +17,8 @@ def get_promotion():
             '<br>Присоединяйся!')
 
 
-@app.route('/training/<prof>')
-def training(prof):
+#@app.route('/training/<prof>')
+#def training(prof):
     return render_template('training.html', title='Тренировки в полёте', prof=prof)
 
 
@@ -41,6 +41,22 @@ def astronaut_selection():
 def list_of_professions():
     professions = ['Инженер', 'Биолог', 'Строитель', 'Врач', 'Водитель марсохода']
     return render_template('list_prof.html')
+
+@app.route('/answer')
+@app.route('/auto_answer')
+def answer():
+    context = {
+        'title': 'Анкета',
+        'surname': 'Watny',
+        'name': 'Mark',
+        'education': 'выше среднего',
+        'profession': 'штурман марсохода',
+        'sex': 'male',
+        'motivation': 'Всегда мечтал застрять на Марсе!',
+        'ready': True
+    }
+    return render_template('auto_answer.html', **context)
+
 
 if __name__ == '__main__':
     app.run('127.0.0.1', 8080)
