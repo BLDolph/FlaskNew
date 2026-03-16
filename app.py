@@ -1,7 +1,12 @@
 from flask import Flask, render_template
 from flask import redirect
 
+from data.db_session import create_session
 from login_form import LoginForm
+from data.user import User
+from data.jobs import Jobs
+
+from data import db_session
 
 app = Flask(__name__)
 
@@ -11,7 +16,9 @@ app.config["SECRET_KEY"] = 'pudge'
 @app.route('/')
 @app.route('/index')
 def get_index():
-    return render_template('base.html', title='Заготовка')
+    session = create_session()
+    result = session.query(Jobs, User).join(User, Jobs.team_leader == User.id)
+    return render_template('index.html', title='Главная страница', result=result)
 
 
 @app.route('/promotion')
@@ -78,4 +85,5 @@ def login():
 
 
 if __name__ == '__main__':
+    db_session.global_init("db/mars_explorer.db")
     app.run('127.0.0.1', 8080)
