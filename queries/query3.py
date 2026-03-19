@@ -1,0 +1,10 @@
+from data.db_session import global_init, create_session
+from data.user import User
+
+global_init(input())
+session = create_session()
+
+result = session.query(User).filter(User.age < 18)
+
+for user in result:
+    print(f'<Colonist> {user.id} {user.surname} {user.name} {user.age} years')

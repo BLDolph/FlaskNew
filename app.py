@@ -2,15 +2,24 @@ from flask import Flask, render_template
 from flask import redirect
 
 from data.db_session import create_session
-from login_form import LoginForm
+from forms.login_form import LoginForm
 from data.user import User
 from data.jobs import Jobs
+from flask_login import LoginManager, login_user, login_required, logout_user
 
 from data import db_session
 
 app = Flask(__name__)
 
 app.config["SECRET_KEY"] = 'pudge'
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def user_loader(user_id):
+    session = db_session.create_session()
+    return session.get(User, user_id)
 
 
 @app.route('/')
@@ -80,8 +89,24 @@ def answer():
 def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():
-        return redirect('/')
+        session = db_session.create_session()
+        user = session.query(User).filter(
+            User.email == login_form.email.data,
+            User.hashed_password == login_form.password.data
+        ).first()
+        if user and user.check_password(login_form.password.data):
+            login_user(user, login_form.remember_me)
+            return redirect('/')
+        return render_template('login.html', form=login_form,
+                                message='Пользователь не найден')
+
     return render_template('login.html', form=login_form)
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
 
 
 if __name__ == '__main__':
