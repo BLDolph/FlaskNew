@@ -13,3 +13,5 @@ resident = Jobs(
     start_date=datetime.now(),
     is_finished=False
 )
+session.add(resident)
+session.commit()

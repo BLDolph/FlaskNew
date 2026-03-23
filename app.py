@@ -1,7 +1,10 @@
+from datetime import datetime
+
 from flask import Flask, render_template
 from flask import redirect
 
 from data.db_session import create_session
+from forms.jobs_form import JobsForm
 from forms.login_form import LoginForm
 from data.user import User
 from data.jobs import Jobs
@@ -91,8 +94,7 @@ def login():
     if login_form.validate_on_submit():
         session = db_session.create_session()
         user = session.query(User).filter(
-            User.email == login_form.email.data,
-            User.hashed_password == login_form.password.data
+            User.email == login_form.email.data
         ).first()
         if user and user.check_password(login_form.password.data):
             login_user(user, login_form.remember_me)
@@ -107,6 +109,26 @@ def login():
 def logout():
     logout_user()
     return redirect('/')
+
+@app.route('/addjob', methods=['GET', 'POST'])
+@login_required
+def add_job():
+    jobs_form = JobsForm()
+    if jobs_form.validate_on_submit():
+        session = db_session.create_session()
+        job = Jobs(
+            team_leader=jobs_form.team_leader.data,
+            job=jobs_form.job.data,
+            work_size=jobs_form.work_size.data,
+            collaborators=jobs_form.collaborators.data,
+            start_date=datetime.now(),
+            is_finished=jobs_form.is_finished.data
+        )
+        session.add(job)
+        session.commit()
+        return redirect('/')
+    else:
+        return render_template('addjob.html', form=jobs_form, title='Adding a Job')
 
 
 if __name__ == '__main__':
