@@ -11,6 +11,7 @@ from data.jobs import Jobs
 from flask_login import LoginManager, login_user, login_required, logout_user
 
 from data import db_session
+from forms.register_form import RegisterForm
 
 app = Flask(__name__)
 
@@ -104,11 +105,13 @@ def login():
 
     return render_template('login.html', form=login_form)
 
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect('/')
+
 
 @app.route('/addjob', methods=['GET', 'POST'])
 @login_required
@@ -129,6 +132,14 @@ def add_job():
         return redirect('/')
     else:
         return render_template('addjob.html', form=jobs_form, title='Adding a Job')
+
+
+# @app.route('/register')
+# def registration():
+    reg_form = RegisterForm()
+    if reg_form.validate_on_submit():
+        session = db_session.create_session()
+        new_user = User()
 
 
 if __name__ == '__main__':
