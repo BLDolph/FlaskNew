@@ -12,8 +12,10 @@ from flask_login import LoginManager, login_user, login_required, logout_user
 
 from data import db_session
 from forms.register_form import RegisterForm
+from API import api
 
 app = Flask(__name__)
+app.register_blueprint(api)
 
 app.config["SECRET_KEY"] = 'pudge'
 
