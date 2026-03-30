@@ -1,9 +1,19 @@
 from flask import jsonify
-from flask_restful import abort, Resource
+from flask_restful import abort, Resource, reqparse
 
 from data import db_session
 from data.user import User
 
+parser = reqparse.RequestParser()
+parser.add_argument('id', requaried=True, type=int)
+parser.add_argument('surname', requaried=True)
+parser.add_argument('name', requaried=True)
+parser.add_argument('age', requaried=True, type=int)
+parser.add_argument('position', requaried=True)
+parser.add_argument('speciality', requaried=True)
+parser.add_argument('address', requaried=True)
+parser.add_argument('email', requaried=True)
+parser.add_argument('hashed_password', requaried=True)
 
 def abort_if_users_not_found(user_id):
     session = db_session.create_session()
@@ -45,3 +55,21 @@ class UsersListResource(Resource):
                 ) for user in users
             ]
         })
+
+    def post(self):
+        args = parser.parse_args()
+        session = db_session.create_session()
+        user = User(
+            id=args['id'],
+            surname=args['surname'],
+            name=args['name'],
+            age=args['age'],
+            position=args['position'],
+            address=args['address'],
+            email=args['email'],
+            speciality=args['speciality'],
+            hashed_password=args['hashed_password'],
+        )
+        session.add(user)
+        session.commit()
+        return jsonify({'id':user.id})
