@@ -1,4 +1,6 @@
 from datetime import datetime
+from flask import make_response, jsonify
+from flask_restful import reqparse, abort, Api, Resource
 
 from flask import Flask, render_template
 from flask import redirect
@@ -12,10 +14,18 @@ from flask_login import LoginManager, login_user, login_required, logout_user
 
 from data import db_session
 from forms.register_form import RegisterForm
-from API import api
+from resources.jobs_resources import JobsResource, JobsListResource
+from resources.users_resources import UsersResource, UsersListResource
+
+# from API import api
 
 app = Flask(__name__)
-app.register_blueprint(api)
+# app.register_blueprint(api)
+api = Api(app)
+api.add_resource(JobsResource, '/api/v2/jobs/<int:jobs_id>')
+api.add_resource(JobsListResource, '/api/v2/jobs')
+api.add_resource(UsersResource, '/api/v2/users/<int:user_id>')
+api.add_resource(UsersListResource, '/api/v2/users')
 
 app.config["SECRET_KEY"] = 'pudge'
 
@@ -142,6 +152,17 @@ def add_job():
     if reg_form.validate_on_submit():
         session = db_session.create_session()
         new_user = User()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+@app.errorhandler(400)
+def bad_request(_):
+    return make_response(jsonify({'error': 'Bad Request'}), 400)
+
 
 
 if __name__ == '__main__':
