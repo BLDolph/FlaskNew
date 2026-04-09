@@ -55,6 +55,11 @@ def get_promotion():
             '<br>Присоединяйся!')
 
 
+@app.route('/results/<nickname>/<int:level>/<float:rating>')
+def selection(nickname, level, rating):
+    return render_template('selection.html', nickname=nickname, level=level, rating=rating)
+
+
 @app.route('/choice/<planet_name>')
 def offer(planet_name):
     return render_template('offer.html', planet_name=planet_name)
