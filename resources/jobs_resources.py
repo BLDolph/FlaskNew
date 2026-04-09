@@ -6,13 +6,13 @@ from data.jobs import Jobs
 
 
 parser = reqparse.RequestParser()
-parser.add_argument('team_leader', requaried=True, type=int)
-parser.add_argument('job', requaried=True)
-parser.add_argument('work_size', requaried=True, type=int)
-parser.add_argument('collaborators', requaried=True)
-parser.add_argument('start_date', requaried=True)
-parser.add_argument('end_date', requaried=True)
-parser.add_argument('is_finished', requaried=True, type=bool)
+parser.add_argument('team_leader', required=True, type=int)
+parser.add_argument('job', required=True)
+parser.add_argument('work_size', required=True, type=int)
+parser.add_argument('collaborators', required=True)
+parser.add_argument('start_date', required=True)
+parser.add_argument('end_date', required=True)
+parser.add_argument('is_finished', required=True, type=bool)
 
 
 def abort_if_jobs_not_found(jobs_id):

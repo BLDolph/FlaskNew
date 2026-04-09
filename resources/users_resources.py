@@ -5,15 +5,15 @@ from data import db_session
 from data.user import User
 
 parser = reqparse.RequestParser()
-parser.add_argument('id', requaried=True, type=int)
-parser.add_argument('surname', requaried=True)
-parser.add_argument('name', requaried=True)
-parser.add_argument('age', requaried=True, type=int)
-parser.add_argument('position', requaried=True)
-parser.add_argument('speciality', requaried=True)
-parser.add_argument('address', requaried=True)
-parser.add_argument('email', requaried=True)
-parser.add_argument('hashed_password', requaried=True)
+parser.add_argument('id', required=True, type=int)
+parser.add_argument('surname', required=True)
+parser.add_argument('name', required=True)
+parser.add_argument('age', required=True, type=int)
+parser.add_argument('position', required=True)
+parser.add_argument('speciality', required=True)
+parser.add_argument('address', required=True)
+parser.add_argument('email', required=True)
+parser.add_argument('hashed_password', required=True)
 
 def abort_if_users_not_found(user_id):
     session = db_session.create_session()

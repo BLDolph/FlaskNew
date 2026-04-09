@@ -55,6 +55,11 @@ def get_promotion():
             '<br>Присоединяйся!')
 
 
+@app.route('/choice/<planet_name>')
+def offer(planet_name):
+    return render_template('offer.html', planet_name=planet_name)
+
+
 #@app.route('/training/<prof>')
 #def training(prof):
     return render_template('training.html', title='Тренировки в полёте', prof=prof)
@@ -63,11 +68,6 @@ def get_promotion():
 @app.route('/image_mars')
 def image_mars():
     return render_template('image_mars.html')
-
-
-@app.route('/choice/<planet_name>')
-def choice_planet(planet_name):
-    return render_template('choose_planet.html')
 
 
 @app.route('/promotion_image')
